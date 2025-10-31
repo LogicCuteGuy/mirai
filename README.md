@@ -1,3 +1,4 @@
+# AI Vibe
 <p align="center">
 	<img src="https://github.com/teampathfinders/mirai/blob/master/resources/logo-wide.png?raw=true" />
 </p>
