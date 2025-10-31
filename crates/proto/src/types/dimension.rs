@@ -2,7 +2,7 @@ use macros::atomic_enum;
 
 /// The Minecraft dimensions.
 #[atomic_enum]
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
 #[repr(u32)]
 pub enum Dimension {
     /// The overworld dimension.

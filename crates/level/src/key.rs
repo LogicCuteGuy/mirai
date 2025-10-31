@@ -21,7 +21,7 @@ pub const LOCAL_PLAYER: &[u8] = b"~local_player";
 /// Database key prefixes.
 ///
 /// Data from [`Minecraft fandom`](https://minecraft.fandom.com/wiki/Bedrock_Edition_level_format#Chunk_key_format).
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 #[repr(u8)]
 pub enum KeyType {
     /// 3D biome map.
@@ -54,15 +54,22 @@ pub enum KeyType {
     HardCodedSpawnAreas = 0x39,
     /// Random tick data.
     RandomTicks = 0x3a,
+    /// Custom key type for enhanced metadata
+    Custom(String),
 }
 
 impl KeyType {
     /// Returns the discriminant of `self`.
     pub fn discriminant(&self) -> u8 {
-        // SAFETY: KeyData is marked as `repr(u8)` and therefore its layout is a
-        // `repr(C)` union of `repr(C)` structs, each of which has the `u8` discriminant as its first
-        // field. Hence, we can read the discriminant without offsetting the pointer.
-        unsafe { *<*const _>::from(self).cast::<u8>() }
+        match self {
+            KeyType::Custom(_) => 0x3b, // Custom discriminant for Custom variant
+            _ => {
+                // SAFETY: KeyData is marked as `repr(u8)` and therefore its layout is a
+                // `repr(C)` union of `repr(C)` structs, each of which has the `u8` discriminant as its first
+                // field. Hence, we can read the discriminant without offsetting the pointer.
+                unsafe { *<*const _>::from(self).cast::<u8>() }
+            }
+        }
     }
 }
 

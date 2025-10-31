@@ -170,6 +170,17 @@ mod key;
 mod settings;
 mod states;
 mod subchunk;
+mod world;
+mod streaming;
+mod ecs_integration;
+mod leveldb_compatibility;
+mod migration;
+
+#[cfg(test)]
+mod leveldb_compatibility_test;
+
+#[cfg(test)]
+mod leveldb_compatibility_basic_test;
 
 /// Direct access to the LevelDB database.
 pub mod database;
@@ -179,5 +190,11 @@ pub mod provider;
 pub use batch::*;
 pub use biome::*;
 pub use key::*;
+pub use settings::*;
 pub use states::*;
 pub use subchunk::*;
+pub use world::*;
+pub use streaming::*;
+pub use ecs_integration::*;
+pub use leveldb_compatibility::*;
+pub use migration::*;

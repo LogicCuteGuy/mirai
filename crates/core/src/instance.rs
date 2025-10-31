@@ -104,7 +104,7 @@ impl InstanceBuilder {
             clients: user_map,
             command_service,
             level_service,
-            config: self.0,
+            config: Arc::new(self.0),
 
             raknet_guid: rand::random(),
             current_motd: RwLock::new(String::new()),
@@ -149,7 +149,7 @@ pub struct Instance {
     /// Keeps track of the level state.
     level_service: Arc<crate::level::service::Service>,
     /// Keeps track of the current configuration of the server.
-    config: Config,
+    config: Arc<Config>,
     /// Cancelled when the server has started up successfully.
     startup_token: CancellationToken,
     /// Cancelled when the server is in the process of shutting down.
@@ -183,8 +183,8 @@ impl Instance {
 
     /// Gets the current configuration of the instance.
     #[inline]
-    pub const fn config(&self) -> &Config {
-        &self.config
+    pub fn config(&self) -> Arc<Config> {
+        Arc::clone(&self.config)
     }
 
     /// Gets the command service of this instance.

@@ -1,4 +1,8 @@
-//! All types used in the Bedrock and RakNet protocols.
+//! Bedrock Edition protocol implementation for Mirai
+//! 
+//! This crate provides all types and functionality for handling Bedrock Edition
+//! (UDP/RakNet) protocol packets. Mirai is a Bedrock Edition server and only
+//! supports the Bedrock protocol.
 
 #![warn(
     // missing_docs,
@@ -45,9 +49,49 @@
 pub mod bedrock;
 pub mod crypto;
 pub mod raknet;
+pub mod raknet_connection_manager;
 pub mod types;
+pub mod unified;
+pub mod codec;
+pub mod connection;
+pub mod raknet_bridge;
+pub mod enhanced_connection;
+pub mod unified_auth;
+pub mod connection_state;
 
 // pub mod xbox;
 
 pub use base64;
 pub use uuid;
+
+// Re-export Bedrock protocol types for convenience
+pub use unified::{
+    BedrockPacket, BedrockProtocolError, RawBedrockPacket, PacketDirection, BedrockPacketRegistry
+};
+pub use codec::{BedrockPacketCodec};
+pub use connection::{
+    BedrockConnection, BedrockConnectionManager, BedrockConnectionState,
+    BedrockAuthData, ConnectionStats, GlobalConnectionStats
+};
+pub use raknet_bridge::{
+    RakNetBridge, EnhancedRakNetClient, RakNetConfig, RakNetConnectionState,
+    RakNetPacketHandler
+};
+pub use enhanced_connection::{
+    EnhancedConnectionManager, EnhancedConnectionConfig, ConnectionInfo,
+    RakNetConnectionInfo, EnhancedConnectionStats
+};
+pub use unified_auth::{
+    UnifiedAuthService, UnifiedPlayerProfile, UnifiedAuthConfig,
+    JavaAuthService, BedrockAuthService, JavaPlayerProfile, BedrockPlayerProfile,
+    JavaAuthConfig, BedrockAuthConfig, PlayerProperty, AuthStats, UnifiedAuthStats,
+    UnifiedEncryptionManager, EncryptionSession, ProtocolType, UnifiedProtocolError,
+    UnifiedAuthData
+};
+pub use connection_state::{
+    UnifiedConnectionStateManager, ConnectionStateInfo, ConnectionStateStats,
+    ConnectionStateConfig, UnifiedConnectionState
+};
+pub use raknet_connection_manager::{
+    RakNetConnectionManager, RakNetManagerConfig, RakNetSessionInfo, RakNetManagerStats
+};

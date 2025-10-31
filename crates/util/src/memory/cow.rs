@@ -113,6 +113,15 @@ impl<'a> Debug for CowString<'a> {
     }
 }
 
+impl<'a> fmt::Display for CowString<'a> {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            CowString::Borrowed(v) => fmt::Display::fmt(v, fmt),
+            CowString::Owned(v) => fmt::Display::fmt(&**v, fmt),
+        }
+    }
+}
+
 impl From<String> for CowString<'static> {
     fn from(value: String) -> CowString<'static> {
         CowString::Owned(RString::from(value))

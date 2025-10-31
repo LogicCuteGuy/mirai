@@ -1,0 +1,39 @@
+# Configuration for load testing
+
+[server]
+port = 19132
+max_players = 1000
+motd = "Mirai Load Test Server"
+
+[level]
+name = "load_test_world"
+path = "./test_worlds/load_test"
+generator = "flat"
+
+[network]
+mtu = 1400
+max_connections = 1000
+connection_timeout = 60000
+keep_alive_interval = 5000
+
+[protocol]
+compression_enabled = true
+encryption_enabled = false  # Disabled for load testing
+packet_buffer_size = 8192
+
+[performance]
+thread_pool_size = 16
+memory_pool_enabled = true
+metrics_collection_enabled = true
+profiling_enabled = true
+
+[features]
+ecs_enabled = true
+plugin_system_enabled = true
+performance_monitoring = true
+
+[testing]
+load_test_mode = true
+max_concurrent_connections = 1000
+test_duration = 300
+packet_rate_limit = 1000

@@ -1,0 +1,21 @@
+[package]
+name = "mirai-plugins"
+version = "0.1.0"
+edition = "2021"
+description = "Plugin implementations for Mirai Minecraft server"
+authors = ["Mirai Team"]
+
+[dependencies]
+# Core dependencies
+anyhow = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+semver = "1.0"
+tracing = "0.1"
+fastrand = "2.0"
+
+# Mirai dependencies
+mirai-core = { path = "../core" }
+mirai-level = { path = "../level" }
+
+[dev-dependencies]
+tokio-test = "0.4"

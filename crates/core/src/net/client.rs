@@ -13,7 +13,8 @@ use parking_lot::RwLock;
 use raknet::{BroadcastPacket, Frame, FrameBatch, RakNetClient, RakNetCommand, SendConfig, DEFAULT_SEND_CONFIG};
 use tokio::sync::{broadcast, mpsc};
 use proto::bedrock::{Animate, CacheStatus, ChunkRadiusRequest, ClientToServerHandshake, CommandPermissionLevel, CommandRequest, CompressionAlgorithm, ConnectedPacket, ContainerClose, Disconnect, DisconnectReason, FormResponseData, GameMode, Header, Interact, InventoryTransaction, Login, MobEquipment, MovePlayer, PermissionLevel, PlayerAction, PlayerAuthInput, RequestAbility, RequestNetworkSettings, ResourcePackClientResponse, SetInventoryOptions, SetLocalPlayerAsInitialized, SettingsCommand, Skin, TextMessage, TickSync, UpdateSkin, ViolationWarning, CONNECTED_PACKET_ID};
-use proto::crypto::{Encryptor, BedrockIdentity, BedrockClientInfo};
+use proto::crypto::encrypt::Encryptor;
+use proto::crypto::{BedrockIdentity, BedrockClientInfo};
 use proto::uuid::Uuid;
 
 use tokio_util::sync::CancellationToken;
@@ -275,7 +276,8 @@ impl BedrockClient {
         if self.should_decompress.get() {
             let (algorithm, threshold) = {
                 let instance = self.instance();
-                let compression = instance.config().compression();
+                let config = instance.config();
+                let compression = config.compression();
                 (compression.algorithm, compression.threshold)
             };
 

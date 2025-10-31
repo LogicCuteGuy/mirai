@@ -7,21 +7,21 @@ use crate::bedrock::ConnectedPacket;
 /// The client responds with a [`ClientToServerHandshake`](crate::bedrock::ClientToServerHandshake) to
 /// indicate encryption has successfully been initiated.
 #[derive(Debug, Clone)]
-pub struct ServerToClientHandshake<'a> {
+pub struct ServerToClientHandshake {
     /// Token containing the salt and public key.
-    pub jwt: &'a str,
+    pub jwt: String,
 }
 
-impl<'a> ConnectedPacket for ServerToClientHandshake<'a> {
+impl ConnectedPacket for ServerToClientHandshake {
     const ID: u32 = 0x03;
 }
 
-impl<'a> Serialize for ServerToClientHandshake<'a> {
+impl Serialize for ServerToClientHandshake {
     fn size_hint(&self) -> Option<usize> {
         Some(self.jwt.var_len())
     }
 
     fn serialize_into<W: BinaryWrite>(&self, writer: &mut W) -> anyhow::Result<()> {
-        writer.write_str(self.jwt)
+        writer.write_str(&self.jwt)
     }
 }

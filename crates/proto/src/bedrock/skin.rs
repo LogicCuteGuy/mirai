@@ -280,7 +280,7 @@ impl TryFrom<u32> for SkinExpressionType {
 }
 
 /// A skin animation.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct SkinAnimation {
     /// Width of the animation image in pixels.
     #[serde(rename = "ImageWidth")]
@@ -340,7 +340,7 @@ impl<'a> util::Deserialize<'a> for SkinAnimation {
 }
 
 /// A classic or persona skin.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct Skin {
     /// UUID created for the skin.
     #[serde(rename = "SkinId")]

@@ -1,0 +1,34 @@
+# Test configuration for Minecraft 1.20.1 compatibility testing
+
+[server]
+port = 19132
+max_players = 10
+motd = "Mirai Test Server - MC 1.20.1"
+
+[level]
+name = "test_world_1201"
+path = "./test_worlds/1.20.1"
+generator = "flat"
+
+[network]
+
+[network.raknet_config]
+mtu = 1400
+max_connections = 50
+connection_timeout = 30000
+
+[protocol]
+minecraft_version = "1.20.1"
+protocol_version = 594
+compression_enabled = true
+encryption_enabled = true
+
+[features]
+ecs_enabled = true
+plugin_system_enabled = true
+performance_monitoring = true
+
+[testing]
+compatibility_mode = true
+client_version = "1.20.1"
+test_duration = 60

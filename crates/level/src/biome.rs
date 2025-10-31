@@ -66,6 +66,25 @@ impl Biomes {
         &self.fragments
     }
 
+    /// Convert biomes to a flat vector of biome IDs for chunk storage
+    pub fn to_biome_ids(&self) -> Vec<u8> {
+        // For simplicity, extract biome IDs from the first fragment
+        // This is a placeholder implementation - real implementation would
+        // need to handle all fragments and create a 16x16x16 biome grid
+        if let Some(fragment) = self.fragments.first() {
+            match fragment {
+                BiomeEncoding::Single(id) => vec![*id as u8; 256], // Fill with single biome
+                BiomeEncoding::Paletted(storage) => {
+                    // Extract biomes from paletted data
+                    storage.indices.iter().map(|&idx| storage.palette[idx as usize] as u8).collect()
+                }
+                BiomeEncoding::Inherit => vec![0; 256], // Default biome
+            }
+        } else {
+            vec![0; 256] // Default biome
+        }
+    }
+
     /// Reads a chunk biome from a raw buffer.
     pub(crate) fn deserialize<'a, R>(mut reader: R) -> anyhow::Result<Self>
     where

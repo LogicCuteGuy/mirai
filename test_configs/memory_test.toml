@@ -1,0 +1,37 @@
+# Configuration for memory leak detection testing
+
+[server]
+port = 19132
+max_players = 100
+motd = "Mirai Memory Test Server"
+
+[level]
+name = "memory_test_world"
+path = "./test_worlds/memory_test"
+generator = "flat"
+
+[network]
+mtu = 1400
+max_connections = 100
+connection_timeout = 30000
+
+[protocol]
+compression_enabled = true
+encryption_enabled = true
+
+[performance]
+memory_pool_enabled = true
+memory_leak_detection = true
+gc_frequency = 1000  # More frequent GC for testing
+memory_limit_mb = 512
+
+[features]
+ecs_enabled = true
+plugin_system_enabled = true
+performance_monitoring = true
+memory_profiling = true
+
+[testing]
+memory_test_mode = true
+test_duration = 60
+memory_stress_test = true

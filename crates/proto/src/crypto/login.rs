@@ -59,21 +59,21 @@ pub struct BedrockClientInfo {
 }
 
 /// A chain of JSON web tokens.
-#[derive(serde::Deserialize, Debug)]
+#[derive(serde::Deserialize, Debug, Clone)]
 struct TokenChain {
     /// Chain of JWTs.
     pub chain: Vec<String>,
 }
 
 /// Used to extract the public key from the identity tokens.
-#[derive(serde::Deserialize, Debug)]
+#[derive(serde::Deserialize, Debug, Clone)]
 struct KeyTokenPayload {
     #[serde(rename = "identityPublicKey")]
     pub public_key: String,
 }
 
 /// Data extracted from the "extraData" field in the last token in the identity chain.
-#[derive(serde::Deserialize, Debug)]
+#[derive(serde::Deserialize, Debug, Clone)]
 pub struct RawIdentityData {
     /// The Xbox user ID of the client. This is what uniquely identifies a user and is used in several packets.
     #[serde(rename = "XUID")]
@@ -90,7 +90,7 @@ pub struct RawIdentityData {
 }
 
 /// Used to extract the identity data and public key from the last identity token.
-#[derive(serde::Deserialize, Debug)]
+#[derive(serde::Deserialize, Debug, Clone)]
 pub struct IdentityTokenPayload {
     /// Contains the client data. See [`RawIdentityData`].
     #[serde(rename = "extraData")]
@@ -102,7 +102,7 @@ pub struct IdentityTokenPayload {
 
 /// Data structure that splits the user data token into separate [`Skin`] and
 /// [`UserData`] parts.
-#[derive(serde::Deserialize, Debug)]
+#[derive(serde::Deserialize, Debug, Clone)]
 pub struct UserDataTokenPayload {
     /// Info about the client's device.
     #[serde(flatten)]

@@ -1,0 +1,59 @@
+# Example unified configuration file for mirai
+# This demonstrates the merged configuration system
+
+[server]
+server_name = "Unified Mirai Server"
+motd = "Powered by Mirai - A unified Minecraft server"
+max_players = 50
+max_connections = 100
+view_distance = 12
+simulation_distance = 8
+max_render_distance = 16
+difficulty = "Hard"
+gamemode = "Survival"
+hardcore = false
+pvp = true
+online_mode = true
+whitelist = false
+enforce_whitelist = false
+
+[network]
+port = 19132
+ipv4_addr = "0.0.0.0"
+max_clients = 100
+timeout_seconds = 30
+encryption_enabled = true
+
+[network.compression]
+algorithm = "flate"
+threshold = 256
+
+[network.throttling]
+enabled = false
+scalar = 0.0
+threshold = 0
+
+[world]
+world_name = "unified_world"
+level_path = "resources/level"
+seed = 12345
+generate_structures = true
+generator_settings = "{}"
+level_type = "default"
+spawn_protection = 16
+max_world_size = 29999984
+
+[features]
+vanilla_mobs = true
+redstone = true
+world_generation = true
+creative_mode = true
+command_system = true
+performance_monitoring = true
+ecs_system = true
+plugin_system = true
+
+[mirai]
+enable_legacy_api = true
+preserve_existing_behavior = true
+migration_mode = false

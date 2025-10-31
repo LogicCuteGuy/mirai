@@ -14,6 +14,7 @@ use util::CowString;
 use crate::instance::{Instance, IPV4_LOCAL_ADDR};
 
 /// Compression related settings.
+#[derive(Debug)]
 pub struct Compression {
     /// Which algorithm to use for compression.
     pub algorithm: CompressionAlgorithm,
@@ -22,6 +23,7 @@ pub struct Compression {
 }
 
 /// Configuration of the level
+#[derive(Debug)]
 pub struct LevelConfig {
     /// The path to the level.
     pub path: String,

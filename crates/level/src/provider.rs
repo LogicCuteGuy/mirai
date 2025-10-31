@@ -153,4 +153,33 @@ impl Provider {
     pub fn batch() -> WriteBatch {
         WriteBatch::new()
     }
+    
+    /// Get raw data from database using DataKey
+    pub fn get_raw(&self, key: DataKey) -> anyhow::Result<Option<Vec<u8>>> {
+        if let Some(guard) = self.database.get(key)? {
+            Ok(Some(guard.as_ref().to_vec()))
+        } else {
+            Ok(None)
+        }
+    }
+    
+    /// Put raw data into database using DataKey
+    pub fn put_raw<V: AsRef<[u8]>>(&self, key: DataKey, value: V) -> anyhow::Result<()> {
+        self.database.put(key, value)
+    }
+    
+    /// Get database iterator for scanning keys
+    pub fn iter(&self) -> crate::database::Keys {
+        self.database.iter()
+    }
+    
+    /// Get the world path
+    pub fn path(&self) -> &Path {
+        &self.path
+    }
+    
+    /// Get reference to the database
+    pub fn database(&self) -> &Database {
+        &self.database
+    }
 }

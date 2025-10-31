@@ -48,11 +48,24 @@
 
 pub mod command;
 pub mod config;
+pub mod config_migration;
+pub mod ecs;
 pub mod forms;
 pub mod instance;
 pub mod item;
 pub mod level;
 pub mod net;
+pub mod plugin;
+pub mod performance;
+pub mod unified_config;
+pub mod unified_features;
+
+// Generated code from codegen crate
+pub mod generated {
+    //! Generated Minecraft data structures from behavior packs
+    
+    include!(concat!(env!("OUT_DIR"), "/mod.rs"));
+}
 
 #[cfg(test)]
 mod test;

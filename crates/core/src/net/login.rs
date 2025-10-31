@@ -8,7 +8,7 @@ use proto::bedrock::{
     SubChunkResponse, SubChunkResult, TextData, TextMessage, TransactionAction, TransactionSourceType, TransactionType, UpdateBlock,
     UpdateBlockFlags, ViolationWarning, WindowId, WorldGenerator, CLIENT_VERSION_STRING, PROTOCOL_VERSION,
 };
-use proto::crypto::Encryptor;
+use proto::crypto::encrypt::Encryptor;
 use proto::types::Dimension;
 use std::collections::HashMap;
 use std::sync::atomic::Ordering;
@@ -361,7 +361,7 @@ impl BedrockClient {
         // Flush unencrypted packets in queue before enabling encryption
         self.raknet.flush().await?;
 
-        self.send(ServerToClientHandshake { jwt: &jwt })?;
+        self.send(ServerToClientHandshake { jwt })?;
         if self.encryptor.set(encryptor).is_err() {
             // Client sent a second login packet?
             // Something is wrong, disconnect the client.

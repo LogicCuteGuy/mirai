@@ -58,6 +58,7 @@ LevelResult db_open(const char *path)
     database->options.info_log = new NoOpLogger();
     database->options.compressors[0] = new leveldb::ZlibCompressorRaw();
     database->options.compressors[1] = new leveldb::ZlibCompressor();
+    database->options.create_if_missing = true;
     database->read_options.decompress_allocator =
         new leveldb::DecompressAllocator();
 

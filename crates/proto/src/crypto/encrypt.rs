@@ -15,8 +15,7 @@ use rand::rngs::OsRng;
 use rand::Rng;
 use sha2::{Digest, Sha256};
 
-use util::{RVec, BinaryWrite, ExposeSecret, Secret};
-
+use util::{BinaryWrite, ExposeSecret, RVec, Secret};
 
 type Aes256CtrBE = ctr::Ctr64BE<aes::Aes256>;
 
@@ -64,10 +63,7 @@ impl Encryptor {
     ///
     /// This shared secret is hashed using with SHA-256 and the salt contained in the JWT.
     /// The produced hash can then be used to encrypt raknet.
-    #[tracing::instrument(
-        skip_all,
-        name = "Encryptor::new"
-    )]
+    #[tracing::instrument(skip_all, name = "Encryptor::new")]
     pub fn new(client_public_key_der: &str) -> anyhow::Result<(Self, String)> {
         // Generate a random salt using a cryptographically secure generator.
         let salt = (0..16).map(|_| OsRng.sample(Alphanumeric) as char).collect::<String>();
@@ -143,10 +139,7 @@ impl Encryptor {
     ///
     /// If the checksum does not match, a [`BadPacket`](util::ErrorKind::Malformed) error is returned.
     /// The client must be disconnected if this fails, because the data has probably been tampered with.
-    #[tracing::instrument(
-        skip_all,
-        name = "Encryptor::decrypt"
-    )]
+    #[tracing::instrument(skip_all, name = "Encryptor::decrypt")]
     pub fn decrypt(&self, reader: &mut RVec) -> anyhow::Result<()> {
         if reader.len() < 9 {
             tracing::error!("The encrypted buffer is too small to contain any data");
@@ -173,14 +166,8 @@ impl Encryptor {
     }
 
     /// Encrypts a packet and appends the computed checksum.
-    #[tracing::instrument(
-        skip_all,
-        name = "Encryptor::encrypt"
-    )]
-    pub fn encrypt<W: BinaryWrite>(&self, 
-        compound_size: u64,
-        writer: &mut W
-    ) -> anyhow::Result<()> {
+    #[tracing::instrument(skip_all, name = "Encryptor::encrypt")]
+    pub fn encrypt<W: BinaryWrite>(&self, compound_size: u64, writer: &mut W) -> anyhow::Result<()> {
         // dbg!(compound_size);
 
         let counter = self.send_counter.expose().fetch_add(compound_size, Ordering::SeqCst);
